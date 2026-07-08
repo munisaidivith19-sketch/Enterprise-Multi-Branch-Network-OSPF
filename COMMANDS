@@ -1,0 +1,303 @@
+==========================================================
+Enterprise Multi-Branch Network Infrastructure
+Cisco Packet Tracer Commands
+==========================================================
+
+==========================================================
+1. BASIC ROUTER CONFIGURATION
+==========================================================
+
+enable
+
+configure terminal
+
+hostname R1
+
+no ip domain-lookup
+
+end
+
+write memory
+
+
+==========================================================
+2. VLAN CONFIGURATION (SWITCH)
+==========================================================
+
+enable
+
+configure terminal
+
+vlan 10
+name HR
+
+vlan 20
+name FINANCE
+
+vlan 30
+name ADMIN
+
+vlan 40
+name EMPLOYEE
+
+end
+
+write memory
+
+
+==========================================================
+3. ACCESS PORT CONFIGURATION
+==========================================================
+
+interface range fa0/1-5
+switchport mode access
+switchport access vlan 10
+
+interface range fa0/6-10
+switchport mode access
+switchport access vlan 20
+
+interface range fa0/11-15
+switchport mode access
+switchport access vlan 30
+
+interface range fa0/16-20
+switchport mode access
+switchport access vlan 40
+
+end
+
+
+==========================================================
+4. TRUNK CONFIGURATION
+==========================================================
+
+interface g0/1
+switchport mode trunk
+no shutdown
+
+interface g0/2
+switchport mode trunk
+no shutdown
+
+end
+
+
+==========================================================
+5. ROUTER-ON-A-STICK
+==========================================================
+
+interface g0/0
+no shutdown
+
+interface g0/0.10
+encapsulation dot1Q 10
+ip address <Gateway-IP> <Subnet>
+
+interface g0/0.20
+encapsulation dot1Q 20
+ip address <Gateway-IP> <Subnet>
+
+interface g0/0.30
+encapsulation dot1Q 30
+ip address <Gateway-IP> <Subnet>
+
+interface g0/0.40
+encapsulation dot1Q 40
+ip address <Gateway-IP> <Subnet>
+
+
+==========================================================
+6. DHCP CONFIGURATION
+==========================================================
+
+ip dhcp excluded-address <Gateway-IP>
+
+ip dhcp pool HR
+network <Network> <Mask>
+default-router <Gateway-IP>
+dns-server 8.8.8.8
+
+ip dhcp pool FINANCE
+network <Network> <Mask>
+default-router <Gateway-IP>
+dns-server 8.8.8.8
+
+ip dhcp pool ADMIN
+network <Network> <Mask>
+default-router <Gateway-IP>
+dns-server 8.8.8.8
+
+ip dhcp pool EMPLOYEE
+network <Network> <Mask>
+default-router <Gateway-IP>
+dns-server 8.8.8.8
+
+
+==========================================================
+7. CORE LAYER 3 SWITCH
+==========================================================
+
+enable
+
+configure terminal
+
+ip routing
+
+interface fa0/1
+no switchport
+ip address 10.0.1.1 255.255.255.252
+no shutdown
+
+interface fa0/2
+no switchport
+ip address 10.0.2.1 255.255.255.252
+no shutdown
+
+interface fa0/3
+no switchport
+ip address 10.0.3.1 255.255.255.252
+no shutdown
+
+interface fa0/4
+no switchport
+ip address 10.0.4.1 255.255.255.252
+no shutdown
+
+
+==========================================================
+8. ROUTER TO CORE CONNECTION
+==========================================================
+
+interface g0/1
+ip address 10.0.X.2 255.255.255.252
+no shutdown
+
+
+==========================================================
+9. OSPF CONFIGURATION
+==========================================================
+
+router ospf 1
+
+router-id X.X.X.X
+
+network 10.0.X.0 0.0.0.3 area 0
+
+network <LAN Network> <Wildcard> area 0
+
+
+==========================================================
+10. SAVE CONFIGURATION
+==========================================================
+
+copy running-config startup-config
+
+or
+
+write memory
+
+
+==========================================================
+11. VERIFICATION COMMANDS
+==========================================================
+
+show ip interface brief
+
+show running-config
+
+show startup-config
+
+show vlan brief
+
+show interfaces trunk
+
+show ip route
+
+show ip ospf neighbor
+
+show ip protocols
+
+show ip dhcp pool
+
+show ip dhcp binding
+
+show ip dhcp server statistics
+
+show cdp neighbors
+
+show mac address-table
+
+show arp
+
+show spanning-tree
+
+show interfaces status
+
+show interfaces
+
+show interfaces switchport
+
+show access-lists
+
+show version
+
+
+==========================================================
+12. CONNECTIVITY TESTS
+==========================================================
+
+ping <Destination-IP>
+
+traceroute <Destination-IP>
+
+
+==========================================================
+13. TROUBLESHOOTING
+==========================================================
+
+debug ip ospf events
+
+debug ip ospf adj
+
+undebug all
+
+
+==========================================================
+14. WIRELESS ACCESS POINT
+==========================================================
+
+Configure SSID
+
+Configure WPA2 Password
+
+Enable DHCP Client
+
+Connect Wireless Devices
+
+
+==========================================================
+15. PROJECT FEATURES
+==========================================================
+
+✓ VLAN Segmentation
+
+✓ Router-on-a-Stick
+
+✓ DHCP
+
+✓ OSPF
+
+✓ Layer 3 Core Switching
+
+✓ Inter-VLAN Routing
+
+✓ Enterprise WAN
+
+✓ Wireless Connectivity
+
+✓ End-to-End Communication
+
+✓ Enterprise Network Design
+
+==========================================================
